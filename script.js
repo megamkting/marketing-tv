@@ -1,70 +1,124 @@
 let playlist = [];
 let current = 0;
+let lastPlaylist = "";
 
 const img = document.getElementById("imageViewer");
 const video = document.getElementById("videoViewer");
 
-fetch("playlist.json")
-    .then(response => response.json())
-    .then(data => {
-        playlist = data;
+// Cargar playlist inicial
+loadPlaylist(true);
 
-        if (playlist.length > 0) {
+// Revisar cambios cada 15 segundos
+setInterval(checkPlaylist, 15000);
+
+async function loadPlaylist(firstLoad = false) {
+
+    try {
+
+        const response = await fetch("playlist.json?t=" + Date.now());
+
+        const text = await response.text();
+
+        if (text === lastPlaylist) return;
+
+        lastPlaylist = text;
+
+        playlist = JSON.parse(text);
+
+        console.log("Playlist actualizada");
+
+        if (firstLoad) {
+            current = 0;
             playItem();
         }
-    })
-    .catch(error => {
-        console.error("Error cargando playlist:", error);
-    });
+
+    } catch (e) {
+
+        console.error("Error cargando playlist:", e);
+
+    }
+
+}
+
+async function checkPlaylist() {
+
+    try {
+
+        const response = await fetch("playlist.json?t=" + Date.now());
+
+        const text = await response.text();
+
+        if (text !== lastPlaylist) {
+
+            console.log("Se detectó una nueva playlist");
+
+            lastPlaylist = text;
+
+            playlist = JSON.parse(text);
+
+        }
+
+    } catch (e) {
+
+        console.log(e);
+
+    }
+
+}
 
 function playItem() {
 
+    if (playlist.length === 0) return;
+
+    if (current >= playlist.length) {
+        current = 0;
+    }
+
     const item = playlist[current];
 
-    if (!item) return;
-
-    // Ocultar ambos
     img.style.display = "none";
     video.style.display = "none";
 
-    // Limpiar eventos anteriores
-    video.oncanplay = null;
-    video.onended = null;
-    video.onerror = null;
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
 
-    // ---------- IMAGEN ----------
+    // ---------------- IMAGEN ----------------
+
     if (item.type === "image") {
-
-        video.pause();
-        video.removeAttribute("src");
-        video.load();
 
         img.src = item.file;
         img.style.display = "block";
 
         img.onload = () => {
+
             setTimeout(next, (item.duration || 10) * 1000);
+
         };
 
         img.onerror = () => {
-            console.log("No se pudo cargar:", item.file);
+
+            console.log("Error imagen:", item.file);
+
             next();
+
         };
 
-        return;
     }
 
-    // ---------- VIDEO ----------
-    if (item.type === "video") {
+    // ---------------- VIDEO ----------------
+
+    else if (item.type === "video") {
 
         video.style.display = "block";
 
         video.src = item.file;
 
         video.autoplay = true;
+        video.controls = false;
         video.loop = false;
-        video.controls = true;
         video.playsInline = true;
+        video.preload = "auto";
 
         video.muted = false;
         video.defaultMuted = false;
@@ -72,19 +126,15 @@ function playItem() {
 
         video.load();
 
-        video.oncanplay = async () => {
+        video.oncanplay = () => {
 
-            try {
+            video.play().catch(err => {
 
-                await video.play();
+                console.log("Error play:", err);
 
-                console.log("Reproduciendo");
+                next();
 
-            } catch (e) {
-
-                console.log("Error play:", e);
-
-            }
+            });
 
         };
 
@@ -96,11 +146,12 @@ function playItem() {
 
         video.onerror = () => {
 
-            console.log("Error video");
+            console.log("Error video:", item.file);
 
             next();
 
         };
+
     }
 
 }
@@ -110,9 +161,7 @@ function next() {
     current++;
 
     if (current >= playlist.length) {
-
         current = 0;
-
     }
 
     playItem();
