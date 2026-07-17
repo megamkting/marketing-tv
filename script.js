@@ -49,37 +49,35 @@ function playItem() {
 
     else if (item.type === "video") {
 
-        const video = document.createElement("video");
+    const video = document.createElement("video");
 
-        video.src = item.file;
+    video.src = item.file;
+    video.autoplay = true;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.controls = false;
+    video.loop = false;
+    video.playsInline = true;
 
-        video.autoplay = true;
-        video.muted = true;
-        video.controls = false;
-        video.loop = false;
-        video.playsInline = true;
+    video.setAttribute("autoplay", "");
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
 
-        video.style.width = "100%";
-        video.style.height = "100%";
-        video.style.objectFit = "contain";
+    video.style.width = "100%";
+    video.style.height = "100%";
+    video.style.objectFit = "contain";
 
-        video.onended = () => {
-            next();
-        };
+    viewer.appendChild(video);
 
-        video.onerror = () => {
-            console.log("No se pudo reproducir:", item.file);
-            next();
-        };
+    video.play().then(() => {
+        console.log("Video reproduciéndose");
+    }).catch(err => {
+        console.log("Autoplay bloqueado", err);
+    });
 
-        viewer.appendChild(video);
-
-        video.play().catch(err => {
-            console.log(err);
-            next();
-        });
-
-    }
+    video.onended = () => {
+        next();
+    };
 
 }
 
