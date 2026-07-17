@@ -27,6 +27,11 @@ function playItem() {
     img.style.display = "none";
     video.style.display = "none";
 
+    // Limpiar eventos anteriores
+    video.oncanplay = null;
+    video.onended = null;
+    video.onerror = null;
+
     // ---------- IMAGEN ----------
     if (item.type === "image") {
 
@@ -45,45 +50,59 @@ function playItem() {
             console.log("No se pudo cargar:", item.file);
             next();
         };
+
+        return;
     }
 
     // ---------- VIDEO ----------
-    else if (item.type === "video") {
-
-        img.style.display = "none";
+    if (item.type === "video") {
 
         video.style.display = "block";
+
         video.src = item.file;
 
         video.autoplay = true;
-        video.controls = true;
         video.loop = false;
+        video.controls = true;
         video.playsInline = true;
+
         video.muted = false;
         video.defaultMuted = false;
-        video.volume = 1.0;
+        video.volume = 1;
 
         video.load();
 
-        video.oncanplay = () => {
-            video.play()
-                .then(() => {
-                    console.log("Video reproduciéndose");
-                })
-                .catch(err => {
-                    console.log("Error:", err);
-                });
+        video.oncanplay = async () => {
+
+            try {
+
+                await video.play();
+
+                console.log("Reproduciendo");
+
+            } catch (e) {
+
+                console.log("Error play:", e);
+
+            }
+
         };
 
         video.onended = () => {
+
             next();
+
         };
 
         video.onerror = () => {
-            console.log("Error al reproducir video");
+
+            console.log("Error video");
+
             next();
+
         };
     }
+
 }
 
 function next() {
@@ -91,8 +110,11 @@ function next() {
     current++;
 
     if (current >= playlist.length) {
+
         current = 0;
+
     }
 
     playItem();
+
 }
