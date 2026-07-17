@@ -8,6 +8,13 @@
     <title>Marketing TV</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+    
 <body>
 
 <div id="viewer"></div>
