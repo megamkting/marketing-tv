@@ -19,7 +19,13 @@ if ('serviceWorker' in navigator) {
 
 <div id="viewer">
     <img id="imageViewer">
-    <video id="videoViewer" autoplay playsinline controls></video>
+    <video
+    id="videoViewer"
+    autoplay
+    muted
+    playsinline
+    preload="auto">
+    </video>
 </div>
 
 <script src="script.js"></script>
