@@ -9,6 +9,8 @@
 ,
   {"type":"video","file":"media/compresor.mp4","duration":10}
 ,
+  {"type":"image","file":"media/hu.jpeg","duration":10}
+,
   {"type":"image","file":"media/promo2.jpg","duration":10}
 ,
   {"type":"video","file":"media/somosmega.mp4","duration":10}
