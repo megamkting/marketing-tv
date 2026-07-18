@@ -1,19 +1,11 @@
 [
-  {
-    "type": "image",
-    "file": "media/promo2.jpg",
-    "duration": 10
-  },
-  {
-    "type": "video",
-    "file": "media/Ventilador.mp4"
-  },
-  {
-    "type": "video",
-    "file": "media/anuncio.mp4"
-  },
-  {
-    "type": "video",
-    "file": "media/compresor.mp4"
-  }
+  {"type":"image","file":"222600.png","duration":10}
+,
+  {"type":"video","file":"media/Ventilador.mp4","duration":10}
+,
+  {"type":"video","file":"media/anuncio.mp4","duration":10}
+,
+  {"type":"video","file":"media/compresor.mp4","duration":10}
+,
+  {"type":"image","file":"media/promo2.jpg","duration":10}
 ]
