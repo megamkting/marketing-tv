@@ -1,4 +1,6 @@
 [
+  {"type":"image","file":"media/ANTIFREEZE.png","duration":10}
+,
   {"type":"video","file":"media/Bombadeagya.mp4","duration":10}
 ,
   {"type":"image","file":"media/COMPRESOR.png","duration":10}
@@ -6,6 +8,8 @@
   {"type":"image","file":"media/RADIADOR.png","duration":10}
 ,
   {"type":"image","file":"media/STOCK.png","duration":10}
+,
+  {"type":"image","file":"media/TITANIUM.png","duration":10}
 ,
   {"type":"video","file":"FB.mp4","duration":10}
 ,
