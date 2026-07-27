@@ -19,27 +19,21 @@ jobs:
 
       - name: Generar playlist.json
         run: |
-
           echo "[" > playlist.json
 
           first=true
 
-          for file in $(find media -type f | sort); do
+          while IFS= read -r file; do
 
             ext="${file##*.}"
+            ext=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
 
             if [[ "$ext" =~ ^(jpg|jpeg|png|webp|gif)$ ]]; then
-
               type="image"
-
             elif [[ "$ext" =~ ^(mp4|webm|mov)$ ]]; then
-
               type="video"
-
             else
-
               continue
-
             fi
 
             if [ "$first" = false ]; then
@@ -48,17 +42,15 @@ jobs:
 
             first=false
 
-            echo "  {\"type\":\"$type\",\"file\":\"$file\",\"duration\":10}" >> playlist.json
+            printf '  {"type":"%s","file":"%s","duration":10}\n' "$type" "$file" >> playlist.json
 
-          done
+          done < <(find media -type f | sort)
 
           echo "]" >> playlist.json
 
       - name: Commit playlist
         run: |
-
           git config user.name "github-actions"
-
           git config user.email "actions@github.com"
 
           git add playlist.json
