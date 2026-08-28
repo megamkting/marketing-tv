@@ -12,4 +12,14 @@
   {"type":"video","file":"media/VIDEO1.mp4","duration":10}
 ,
   {"type":"video","file":"media/VIDEONUEVOS PRODUCTOS FB.mp4","duration":10}
+,
+  {"type":"video","file":"media/blowertv.mp4","duration":10}
+,
+  {"type":"video","file":"media/compresor2tv.mp4","duration":10}
+,
+  {"type":"video","file":"media/compresortv.mp4","duration":10}
+,
+  {"type":"video","file":"media/condensadortv.mp4","duration":10}
+,
+  {"type":"video","file":"media/ventiladortv.mp4","duration":10}
 ]
