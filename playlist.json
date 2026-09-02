@@ -21,5 +21,9 @@
 ,
   {"type":"video","file":"media/condensadortv.mp4","duration":10}
 ,
+  {"type":"video","file":"media/evaporadortv.mp4","duration":10}
+,
+  {"type":"video","file":"media/gastv.mp4","duration":10}
+,
   {"type":"video","file":"media/ventiladortv.mp4","duration":10}
 ]
