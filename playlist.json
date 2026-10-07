@@ -25,5 +25,11 @@
 ,
   {"type":"video","file":"media/gastv.mp4","duration":10}
 ,
+  {"type":"video","file":"media/octubre1small.mp4","duration":10}
+,
+  {"type":"video","file":"media/octubre2small.mp4","duration":10}
+,
+  {"type":"video","file":"media/octubre3small.mp4","duration":10}
+,
   {"type":"video","file":"media/ventiladortv.mp4","duration":10}
 ]
